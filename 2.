@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+class Sach {
+    protected String maSach;
+    protected String ngayNhap;
+    protected double donGia;
+    protected int soLuong;
+    protected String nhaXuatBan;
+
+    public Sach(String maSach, String ngayNhap, double donGia, int soLuong, String nhaXuatBan) {
+        this.maSach = maSach;
+        this.ngayNhap = ngayNhap;
+        this.donGia = donGia;
+        this.soLuong = soLuong;
+        this.nhaXuatBan = nhaXuatBan;
+    }
+
+    public double tinhThanhTien() {
+        return soLuong * donGia;
+    }
+}
+
+class SachGiaoKhoa extends Sach {
+    protected String tinhTrang;
+
+    public SachGiaoKhoa(String maSach, String ngayNhap, double donGia, int soLuong, String nhaXuatBan, String tinhTrang) {
+        super(maSach, ngayNhap, donGia, soLuong, nhaXuatBan);
+        this.tinhTrang = tinhTrang;
+    }
+
+    @Override
+    public double tinhThanhTien() {
+        if (tinhTrang.equals("mới")) {
+            return super.tinhThanhTien();
+        } else if (tinhTrang.equals("cũ")) {
+            return super.tinhThanhTien() * 0.5;
+        } else {
+            return 0;
+        }
+    }
+}
+
+class SachThamKhao extends Sach {
+    protected double thue;
+
+    public SachThamKhao(String maSach, String ngayNhap, double donGia, int soLuong, String nhaXuatBan, double thue) {
+        super(maSach, ngayNhap, donGia, soLuong, nhaXuatBan);
+        this.thue = thue;
+    }
+
+    @Override
+    public double tinhThanhTien() {
+        return super.tinhThanhTien() + thue;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Sach> danhSachSach = new ArrayList<Sach>();
+
+        danhSachSach.add(new SachGiaoKhoa("GK001", "10/02/2022", 10000, 20, "NXB A", "mới"));
+        danhSachSach.add(new SachGiaoKhoa("GK002", "15/01/2022", 5000, 15, "NXB B", "cũ"));
+        danhSachSach.add(new SachGiaoKhoa("GK003", "20/03/2022", 8000, 30, "NXB A", "mới"));
+        danhSachSach.add(new SachThamKhao("TK001", "05/03/2022", 15000, 10, "NXB C", 2000));
+        danhSachSach.add(new SachThamKhao("TK002", "01/01/2022", 12000, 5, "NXB B", 1500));
+        danhSachSach.add(new SachThamKhao("TK003", "25/02/2022", 10000,10,"NXB C",1000));
+    }
+}
