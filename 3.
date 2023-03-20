@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+
+abstract class GiaoDich {
+    protected String maGiaoDich;
+    protected String ngayGiaoDich;
+    protected double donGia;
+    protected int soLuong;
+
+    public GiaoDich(String maGiaoDich, String ngayGiaoDich, double donGia, int soLuong) {
+        this.maGiaoDich = maGiaoDich;
+        this.ngayGiaoDich = ngayGiaoDich;
+        this.donGia = donGia;
+        this.soLuong = soLuong;
+    }
+
+    public abstract double tinhThanhTien();
+}
+
+class GiaoDichVang extends GiaoDich {
+    private String loaiVang;
+
+    public GiaoDichVang(String maGiaoDich, String ngayGiaoDich, double donGia, int soLuong, String loaiVang) {
+        super(maGiaoDich, ngayGiaoDich, donGia, soLuong);
+        this.loaiVang = loaiVang;
+    }
+
+    @Override
+    public double tinhThanhTien() {
+        return soLuong * donGia;
+    }
+}
+
+class GiaoDichTienTe extends GiaoDich {
+    private double tiGia;
+    private String loaiTienTe;
+
+    public GiaoDichTienTe(String maGiaoDich, String ngayGiaoDich, double donGia, int soLuong, double tiGia, String loaiTienTe) {
+        super(maGiaoDich, ngayGiaoDich, donGia, soLuong);
+        this.tiGia = tiGia;
+        this.loaiTienTe = loaiTienTe;
+    }
+
+    @Override
+    public double tinhThanhTien() {
+        if (loaiTienTe.equals("VND")) {
+            return soLuong * donGia;
+        } else {
+            return soLuong * donGia * tiGia;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<GiaoDich> dsGiaoDich = new ArrayList<>();
+
+        dsGiaoDich.add(new GiaoDichVang("GD001", "01/01/2022", 5000000, 10, "24K"));
+        dsGiaoDich.add(new GiaoDichVang("GD002", "02/01/2022", 4500000, 15, "18K"));
+        dsGiaoDich.add(new GiaoDichVang("GD003", "03/01/2022", 4800000, 12, "9999"));
+
+        dsGiaoDich.add(new GiaoDichTienTe("GD004", "04/01/2022", 25000000, 5, 0.000043, "USD"));
+        dsGiaoDich.add(new GiaoDichTienTe("GD005", "05/01/2022", 30000000, 3, 0.000039, "EUR"));
+        dsGiaoDich.add(new GiaoDichTienTe("GD006", "06/01/2022", 2000000000, 2, 1, "VND"));
+
+        // Tính tổng số l
